@@ -1,0 +1,89 @@
+// Version: 1.0.0
+type BookingStatus__866642965 = {#Active; #Cancelled; #CheckedOut};
+type Booking__1057793126 =
+  {
+    actualCheckOutDate : ?Timestamp__301639476;
+    advancePayment : Float;
+    checkInDate : Timestamp__301639476;
+    createdAt : Timestamp__301639476;
+    createdBy : UserId__158757552;
+    expectedCheckOutDate : Timestamp__301639476;
+    guestIdProof : ?Text;
+    guestName : Text;
+    guestPhone : Text;
+    id : Nat;
+    pricePerDay : Float;
+    roomId : Nat;
+    status : BookingStatus__866642965
+  };
+type Invoice__447005592 =
+  {
+    advancePaid : Float;
+    bookingId : Nat;
+    createdAt : Int;
+    discount : Float;
+    dueAmount : Float;
+    extraCharges : Float;
+    id : Nat;
+    paymentMethod : ?PaymentMethod__76635717;
+    paymentStatus : PaymentStatus__928549212;
+    roomCharges : Float;
+    totalAmount : Float
+  };
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type PaymentMethod__76635717 = {#Cash; #UPI};
+type PaymentStatus__928549212 = {#Paid; #PartiallyPaid; #Pending};
+type RoomStatus__458843262 = {#Available; #Maintenance; #Occupied};
+type RoomType__529556096 =
+  {#AcDeluxe; #AcDouble; #AcSingle; #Deluxe; #Double; #Single};
+type Room__355553194 =
+  {
+    createdAt : Timestamp__301639476;
+    id : Nat;
+    number : Text;
+    pricePerDay : Float;
+    roomType : RoomType__529556096;
+    status : RoomStatus__458843262
+  };
+type StaffUser__792487668 =
+  {
+    createdAt : Timestamp__301639476;
+    email : Text;
+    isActive : Bool;
+    name : Text;
+    principal : UserId__158757552;
+    role : UserRole__41952412
+  };
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+type UserRole__41952412 = {#Admin; #Staff};
+actor {
+  stable bookings :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Booking__1057793126]];
+      var elementIndex : Nat__490723111
+    };
+  stable invoices :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Invoice__447005592]];
+      var elementIndex : Nat__490723111
+    };
+  stable var nextBookingId : Nat;
+  stable var nextInvoiceId : Nat;
+  stable var nextRoomId : Nat;
+  stable rooms :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Room__355553194]];
+      var elementIndex : Nat__490723111
+    };
+  stable users :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?StaffUser__792487668]];
+      var elementIndex : Nat__490723111
+    }
+};

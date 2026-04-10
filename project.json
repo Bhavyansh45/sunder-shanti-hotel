@@ -1,0 +1,27 @@
+{
+  "overview": "A complete hotel management system for Sunder Shanti Hotel — internal staff software for managing rooms, guest bookings, invoices, checkout, payments, and reports with admin/staff role-based access.",
+  "features": [
+    "Room inventory management with status tracking (Available, Occupied, Maintenance)",
+    "Walk-in booking system with guest records and advance payment tracking",
+    "Checkout with auto-generated professional invoices (printable layout)",
+    "Cash and UPI payment recording with partial payment support",
+    "Dashboard with live metrics: total rooms, available, occupied, today check-ins, today revenue",
+    "Role-based access control: Admin (full access) and Staff (booking and checkout only)",
+    "Daily revenue, occupancy, pending payments, and booking history reports",
+    "Sunder Shanti Hotel SVG logo and branded warm-toned professional UI",
+    "Responsive design for desktop and mobile browser use",
+    "No PWA, no service workers — clean standard web application"
+  ],
+  "category": "productivity",
+  "tags": [
+    "hotel",
+    "management",
+    "booking",
+    "hospitality",
+    "invoice",
+    "reports",
+    "crm",
+    "staff-tools"
+  ],
+  "last_updated": "2026-04-10T12:57:10.372Z"
+}

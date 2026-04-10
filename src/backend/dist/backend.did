@@ -1,0 +1,159 @@
+type UserRole = 
+ variant {
+   Admin;
+   Staff;
+ };
+type UserId = principal;
+type Timestamp = int;
+type StaffUser = 
+ record {
+   createdAt: Timestamp;
+   email: text;
+   isActive: bool;
+   name: text;
+   "principal": UserId;
+   role: UserRole;
+ };
+type RoomType = 
+ variant {
+   AcDeluxe;
+   AcDouble;
+   AcSingle;
+   Deluxe;
+   Double;
+   Single;
+ };
+type RoomStatus = 
+ variant {
+   Available;
+   Maintenance;
+   Occupied;
+ };
+type Room = 
+ record {
+   createdAt: Timestamp;
+   id: nat;
+   number: text;
+   pricePerDay: float64;
+   roomType: RoomType;
+   status: RoomStatus;
+ };
+type Result__3 = 
+ variant {
+   err: text;
+   ok: Invoice;
+ };
+type Result__2 = 
+ variant {
+   err: text;
+   ok: Booking;
+ };
+type Result__1 = 
+ variant {
+   err: text;
+   ok: Room;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok: StaffUser;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+type PaymentStatus = 
+ variant {
+   Paid;
+   PartiallyPaid;
+   Pending;
+ };
+type PaymentMethod = 
+ variant {
+   Cash;
+   UPI;
+ };
+type Invoice = 
+ record {
+   advancePaid: float64;
+   bookingId: nat;
+   createdAt: int;
+   discount: float64;
+   dueAmount: float64;
+   extraCharges: float64;
+   id: nat;
+   paymentMethod: opt PaymentMethod;
+   paymentStatus: PaymentStatus;
+   roomCharges: float64;
+   totalAmount: float64;
+ };
+type DashboardStats = 
+ record {
+   availableRooms: nat;
+   maintenanceRooms: nat;
+   occupiedRooms: nat;
+   todayCheckIns: nat;
+   todayRevenue: float64;
+   totalRooms: nat;
+ };
+type BookingStatus = 
+ variant {
+   Active;
+   Cancelled;
+   CheckedOut;
+ };
+type Booking = 
+ record {
+   actualCheckOutDate: opt Timestamp;
+   advancePayment: float64;
+   checkInDate: Timestamp;
+   createdAt: Timestamp;
+   createdBy: UserId;
+   expectedCheckOutDate: Timestamp;
+   guestIdProof: opt text;
+   guestName: text;
+   guestPhone: text;
+   id: nat;
+   pricePerDay: float64;
+   roomId: nat;
+   status: BookingStatus;
+ };
+service : {
+  addRoom: (number: text, roomType: RoomType, pricePerDay: float64) ->
+   (Result__1);
+  addUser: ("principal": principal, name: text, email: text, role:
+   UserRole) -> (Result_1);
+  cancelBooking: (id: nat, reason: text) -> (Result);
+  checkout: (bookingId: nat, actualCheckOutDate: int, extraCharges: float64,
+   discount: float64, paymentMethod: PaymentMethod, amountPaid: float64) ->
+   (Result__3);
+  createBooking: (guestName: text, guestPhone: text, guestIdProof: opt text,
+   roomId: nat, checkInDate: int, expectedCheckOutDate: int, advancePayment:
+   float64) -> (Result__2);
+  deactivateUser: ("principal": principal) -> (Result);
+  deleteRoom: (id: nat) -> (Result);
+  getActiveBookings: () -> (vec Booking) query;
+  getAvailableRooms: () -> (vec Room) query;
+  getBookingById: (id: nat) -> (opt Booking) query;
+  getBookingHistory: (startDate: opt int, endDate: opt int) ->
+   (vec Booking) query;
+  getBookings: (status: opt BookingStatus) -> (vec Booking) query;
+  getDailyRevenue: (date: int) -> (float64) query;
+  getDashboardStats: () -> (DashboardStats) query;
+  getInvoice: (bookingId: nat) -> (opt Invoice) query;
+  getInvoices: () -> (vec Invoice) query;
+  getInvoicesByDateRange: (startDate: int, endDate: int) ->
+   (vec Invoice) query;
+  getPendingInvoices: () -> (vec Invoice) query;
+  getRoomById: (id: nat) -> (opt Room) query;
+  getRooms: () -> (vec Room) query;
+  getUserRole: ("principal": principal) -> (opt UserRole) query;
+  getUsers: () -> (vec StaffUser) query;
+  isAdminQuery: ("principal": principal) -> (bool) query;
+  updateBooking: (id: nat, expectedCheckOutDate: opt int, advancePayment:
+   opt float64) -> (Result__2);
+  updateRoom: (id: nat, number: opt text, roomType: opt RoomType,
+   pricePerDay: opt float64, status: opt RoomStatus) -> (Result__1);
+  updateUserRole: ("principal": principal, role: UserRole) -> (Result);
+}
