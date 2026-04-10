@@ -113,7 +113,7 @@ export default function LoginPage() {
             rel="noopener noreferrer"
             className="underline hover:text-foreground transition-colors"
           >
-            caffeine.ai
+            Bhavyanshdigitallab
           </a>
         </p>
       </footer>
